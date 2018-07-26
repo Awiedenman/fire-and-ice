@@ -27,8 +27,10 @@ export class App extends Component {
             this.props.fakeAction();
             alert(this.props.fake);
           }}> FAKE ACTION</button>
+        </div> 
+        <div className='Display-info'>
+          <CardContainer/>
         </div>
-        <CardContainer/>
       </div>
     );
   }
