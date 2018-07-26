@@ -4,7 +4,14 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import { fakeAction } from '../../actions';
+import { houseDataRequest } from '../../apiCalls'
+
 class App extends Component {
+
+  async componentDidMount(){
+    const url = 'http://localhost:3001/api/v1/houses';
+    const data = await houseDataRequest(url);
+  }
 
   render() {
     return (
