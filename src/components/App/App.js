@@ -10,16 +10,24 @@ import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
 export class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false
+    };
+  }
 
   async componentDidMount(){
     const url = 'http://localhost:3001/api/v1/houses';
-    
     try {
-      const housesInfo = await houseDataRequest(url);    
+      await this.setState({isLoading: true});
+      // console.log('on', this.state.isLoading);
+      const housesInfo = await houseDataRequest(url);
+      await this.setState({isLoading: false});  
+      // console.log('off', this.state.isLoading);
       this.props.addHousesToStore(housesInfo);
     } catch (error) {
       throw Error(`Could not fetch: ${error.message}`);
-
     }
   }
 
