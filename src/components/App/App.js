@@ -43,7 +43,10 @@ export class App extends Component {
           }}> FAKE ACTION</button>
         </div> 
         <div className='Display-info'>
-          <CardContainer/>
+          {this.state.isLoading ?
+            <img id='wolf' src={ require('../../images/wolf.gif')}/> :
+            <CardContainer/>
+          }
         </div>
       </div>
     );
