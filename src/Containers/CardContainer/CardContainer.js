@@ -2,12 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from '../../components/Card/Card';
 
-export const CardContainer = (props) => {
-  console.log(props);
-  return (
-    <div> 
-      <Card/>
+export const CardContainer = ({housesInfo}) => {
+  console.log('housesInfo', housesInfo);
 
+  const houseCards = housesInfo.map(( house, index )=> {
+    // console.log(house);
+    return <Card 
+      house={house}
+      key={index}
+    />;
+  });
+  
+  
+  return (
+    <div className='Container'>
+      {houseCards} 
     </div>
   );
 };
