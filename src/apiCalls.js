@@ -15,6 +15,7 @@ export const houseDataRequestAlternate = (url) => {
 };
 
 export const requestSwornMemberInfo = async (swornMemberId) => {
+  console.log(swornMemberId)
   const response = await fetch(`http://localhost:3001/api/v1/character/${swornMemberId}`);
   const swornMember = await response.json();
   return swornMember;

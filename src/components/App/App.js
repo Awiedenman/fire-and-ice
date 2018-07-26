@@ -18,17 +18,11 @@ export class App extends Component {
   }
 
   fetchSwornMemberData =  async (memberId) => {
-    console.log('click');
-    
-    // console.log(memberId);
     try {
-      const swornMemberInfo = await requestSwornMemberInfo(memberId);
-      console.log(swornMemberInfo)
-      this.props.addSwornMembersToStore(swornMemberInfo);
+      return await requestSwornMemberInfo(memberId);
     } catch (error){
       throw Error(`Could not fetch ${error.message}`);
     }
-
   }
 
   async componentDidMount(){
@@ -60,7 +54,8 @@ export class App extends Component {
           {this.state.isLoading ?
             <img id='wolf' src={ require('../../images/wolf.gif')}/> :
             <CardContainer
-              fetchSwornMemberData={this.fetchSwornMemberData}/>
+              fetchSwornMemberData={this.fetchSwornMemberData}
+              addSwornMembersToStore ={this.props.addSwornMembersToStore}/ >
           }
         </div>
       </div>
@@ -68,14 +63,18 @@ export class App extends Component {
   }
 }
 
-App.propTypes = {
-  fake: PropTypes.shape({ fake: string }),
-  addHousesToStore: PropTypes.func
-};
+export const mapStateToProps = state => ({ 
+  swornMembers: state.swornMembers 
+});
 
-// const mapStateToProps = ({ fake }) => ({ fake });
 export const mapDispatchToProps = dispatch => ({ 
   addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo)),
   addSwornMembersToStore: (swornMemberInfo) => dispatch(addSwornMembersToStore(swornMemberInfo))
 });
-export default connect(null, mapDispatchToProps)(App);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+App.propTypes = {
+  fake: PropTypes.shape({ fake: string }),
+  addHousesToStore: PropTypes.func
+};

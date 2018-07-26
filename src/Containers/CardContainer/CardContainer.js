@@ -2,15 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from '../../components/Card/Card';
 
-export const CardContainer = ({housesInfo, fetchSwornMemberData, swornMembers}) => {
+export const CardContainer = ({housesInfo, fetchSwornMemberData, swornMembers, addSwornMembersToStore}) => {
   // console.log('swornMembers', swornMembers);
 
-  const houseCards = housesInfo.map(( house, index )=> {
+  const houseCards = housesInfo.map((house, index) => {
     // console.log(house);
     return <Card 
       house={house}
       key={index}
       fetchSwornMemberData={fetchSwornMemberData}
+      addSwornMembersToStore={addSwornMembersToStore}
     />;
   });
   

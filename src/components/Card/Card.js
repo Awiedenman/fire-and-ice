@@ -6,24 +6,28 @@ import { connect } from 'react-redux';
 
 
 
-export const Card = ({house, fetchSwornMemberData}) => {
-  // console.log(swornMembers);
+export const Card = ({house, fetchSwornMemberData, addSwornMembersToStore}) => {  
   
-  const swornMemberId = () =>{
-    // console.log('click');
+  const swornMemberIds = async () =>{
     const membersIds = house.swornMembers.map( member => {
       const seperateId = member.split('/').slice(5);
-      fetchSwornMemberData(seperateId[0]);
       return seperateId[0];
     });
-    // console.log(membersIds);
-    return membersIds;
+
+    const unresolvedMembers = membersIds.map(async id => {
+      const member = await fetchSwornMemberData(id);
+      return member
+    });
+
+    const members = await Promise.all(unresolvedMembers);
+    addSwornMembersToStore(members);
+    // debugger
   };
-  // console.log(swornMemberId);
+ 
   return (
     <div 
       className='Card'
-      onClick={swornMemberId}
+      onClick={swornMemberIds}
     >
       <p>name:{house.name}</p>
       <p>founded:{house.founded}</p>
