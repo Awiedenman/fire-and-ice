@@ -36,7 +36,7 @@ class App extends Component {
 
 App.propTypes = {
   fake: PropTypes.shape({ fake: string }),
-  addHousesToStore: PropTypes.unc.isRequired
+  addHousesToStore: PropTypes.func
 };
 
 const mapStateToProps = ({ fake }) => ({ fake });
