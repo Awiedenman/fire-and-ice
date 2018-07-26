@@ -1,27 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import { mapStateToProps } from '../../Containers/CardContainer/CardContainer';
 // import fetchSwornMemberData}
 
 
 
-export const Card = ({house, fetchSwornMemberData}) => {
+export const Card = ({house, fetchSwornMemberData, addSwornMembersToStore}) => {  
   
-  const swornMemberId = () =>{
-    // console.log('click');
+  const swornMemberIds = async () =>{
     const membersIds = house.swornMembers.map( member => {
       const seperateId = member.split('/').slice(5);
-      fetchSwornMemberData(seperateId[0]);
       return seperateId[0];
     });
-    // console.log(membersIds);
-    return membersIds;
-  };
-  // console.log(swornMemberId);
 
+    const unresolvedMembers = membersIds.map(async id => {
+      const member = await fetchSwornMemberData(id);
+      return member
+    });
+
+    const members = await Promise.all(unresolvedMembers);
+    addSwornMembersToStore(members);
+    // debugger
+  };
+ 
   return (
     <div 
       className='Card'
-      onClick={swornMemberId}
+      onClick={swornMemberIds}
     >
       <p>name:{house.name}</p>
       <p>founded:{house.founded}</p>
@@ -37,3 +43,9 @@ export const Card = ({house, fetchSwornMemberData}) => {
 Card.propTypes = {
   house: PropTypes.object
 };
+
+// export const mapStateToProps = state => ({
+//   swornMembers: state.swornMembers
+// });
+
+// export default connect(mapStateToProps)(Card);

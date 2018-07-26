@@ -3,9 +3,9 @@ import PropTypes, { shape, func, string } from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { addHousesToStore } from '../../actions';
+import { addHousesToStore, addSwornMembersToStore } from '../../actions';
 // import { fakeAction } from '../../actions';
-import { houseDataRequest,requestSwornMemberInfo } from '../../apiCalls';
+import { houseDataRequest, requestSwornMemberInfo } from '../../apiCalls';
 import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
@@ -17,17 +17,12 @@ export class App extends Component {
     };
   }
 
-  fetchSwornMemberData =  (membersIds) => {
-    console.log('click');
-    
-    console.log(membersIds);
-    // try {
-    //   const swornMemberInfo = await requestSwornMemberInfo(memberId);
-    //   this.props.addSwornMembersToStore(swornMemberInfo)
-    // } catch (error){
-    //   throw Error(`Could not fetch ${error.message}`)
-    // }
-
+  fetchSwornMemberData =  async (memberId) => {
+    try {
+      return await requestSwornMemberInfo(memberId);
+    } catch (error){
+      throw Error(`Could not fetch ${error.message}`);
+    }
   }
 
   async componentDidMount(){
@@ -59,7 +54,8 @@ export class App extends Component {
           {this.state.isLoading ?
             <img id='wolf' src={ require('../../images/wolf.gif')}/> :
             <CardContainer
-              fetchSwornMemberData={this.fetchSwornMemberData}/>
+              fetchSwornMemberData={this.fetchSwornMemberData}
+              addSwornMembersToStore ={this.props.addSwornMembersToStore}/ >
           }
         </div>
       </div>
@@ -67,13 +63,18 @@ export class App extends Component {
   }
 }
 
+export const mapStateToProps = state => ({ 
+  swornMembers: state.swornMembers 
+});
+
+export const mapDispatchToProps = dispatch => ({ 
+  addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo)),
+  addSwornMembersToStore: (swornMemberInfo) => dispatch(addSwornMembersToStore(swornMemberInfo))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 App.propTypes = {
   fake: PropTypes.shape({ fake: string }),
   addHousesToStore: PropTypes.func
 };
-
-const mapStateToProps = ({ fake }) => ({ fake });
-export const mapDispatchToProps = dispatch => ({ 
-  addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo))
-});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
