@@ -1,7 +1,7 @@
 export const houseDataRequest = async (url) => {
   const response = await fetch(url);
-  const data = await response.json();
-  return data;
+  const houses = await response.json();
+  return houses;
 };
 
 
@@ -12,4 +12,10 @@ export const houseDataRequestAlternate = (url) => {
     .catch(error => {
       throw error;
     });
+};
+
+export const requestSwornMemberInfo = async (swornMemberId) => {
+  const response = await fetch(`http://localhost:3001/api/v1/character/${swornMemberId}`);
+  const swornMember = await response.json();
+  return swornMember;
 };
