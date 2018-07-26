@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { housesInfoReducer } from './housesInfoReducer';
+import { housesInfoReducer } from './houseInfoReducer/housesInfoReducer';
 
 const rootReducer = combineReducers({
   housesInfo: housesInfoReducer
