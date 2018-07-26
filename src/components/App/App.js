@@ -10,11 +10,25 @@ import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
 export class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false
+    };
+  }
 
   async componentDidMount(){
     const url = 'http://localhost:3001/api/v1/houses';
-    const housesInfo = await houseDataRequest(url);    
-    this.props.addHousesToStore(housesInfo);
+    try {
+      await this.setState({isLoading: true});
+      // console.log('on', this.state.isLoading);
+      const housesInfo = await houseDataRequest(url);
+      await this.setState({isLoading: false});  
+      // console.log('off', this.state.isLoading);
+      this.props.addHousesToStore(housesInfo);
+    } catch (error) {
+      throw Error(`Could not fetch: ${error.message}`);
+    }
   }
 
   render() {
@@ -27,8 +41,13 @@ export class App extends Component {
             this.props.fakeAction();
             alert(this.props.fake);
           }}> FAKE ACTION</button>
+        </div> 
+        <div className='Display-info'>
+          {this.state.isLoading ?
+            <img id='wolf' src={ require('../../images/wolf.gif')}/> :
+            <CardContainer/>
+          }
         </div>
-        <CardContainer/>
       </div>
     );
   }
