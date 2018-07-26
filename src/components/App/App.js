@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { addHousesToStore } from '../../actions';
 // import { fakeAction } from '../../actions';
 import { houseDataRequest } from '../../apiCalls';
+import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
 export class App extends Component {
@@ -27,8 +28,7 @@ export class App extends Component {
             alert(this.props.fake);
           }}> FAKE ACTION</button>
         </div>
-        <div className='Display-info'>
-        </div>
+        <CardContainer/>
       </div>
     );
   }
