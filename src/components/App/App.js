@@ -13,8 +13,14 @@ export class App extends Component {
 
   async componentDidMount(){
     const url = 'http://localhost:3001/api/v1/houses';
-    const housesInfo = await houseDataRequest(url);    
-    this.props.addHousesToStore(housesInfo);
+    
+    try {
+      const housesInfo = await houseDataRequest(url);    
+      this.props.addHousesToStore(housesInfo);
+    } catch (error) {
+      throw Error(`Could not fetch: ${error.message}`);
+
+    }
   }
 
   render() {

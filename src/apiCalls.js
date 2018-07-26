@@ -1,9 +1,7 @@
 export const houseDataRequest = async (url) => {
   const response = await fetch(url);
-  const houses = await response.json();
-  return houses;
-
-    
+  const data = await response.json();
+  return data;
 };
 
 
