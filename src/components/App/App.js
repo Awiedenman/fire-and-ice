@@ -3,9 +3,9 @@ import PropTypes, { shape, func, string } from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { addHousesToStore } from '../../actions';
+import { addHousesToStore, addSwornMembersToStore } from '../../actions';
 // import { fakeAction } from '../../actions';
-import { houseDataRequest,requestSwornMemberInfo } from '../../apiCalls';
+import { houseDataRequest, requestSwornMemberInfo } from '../../apiCalls';
 import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
@@ -17,16 +17,17 @@ export class App extends Component {
     };
   }
 
-  fetchSwornMemberData =  (membersIds) => {
+  fetchSwornMemberData =  async (memberId) => {
     console.log('click');
     
-    console.log(membersIds);
-    // try {
-    //   const swornMemberInfo = await requestSwornMemberInfo(memberId);
-    //   this.props.addSwornMembersToStore(swornMemberInfo)
-    // } catch (error){
-    //   throw Error(`Could not fetch ${error.message}`)
-    // }
+    // console.log(memberId);
+    try {
+      const swornMemberInfo = await requestSwornMemberInfo(memberId);
+      console.log(swornMemberInfo)
+      this.props.addSwornMembersToStore(swornMemberInfo)
+    } catch (error){
+      throw Error(`Could not fetch ${error.message}`)
+    }
 
   }
 
@@ -72,8 +73,9 @@ App.propTypes = {
   addHousesToStore: PropTypes.func
 };
 
-const mapStateToProps = ({ fake }) => ({ fake });
+// const mapStateToProps = ({ fake }) => ({ fake });
 export const mapDispatchToProps = dispatch => ({ 
-  addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo))
+  addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo)),
+  addSwornMembersToStore: (swornMemberInfo) => dispatch(addSwornMembersToStore(swornMemberInfo))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
