@@ -3,14 +3,17 @@ import PropTypes, { shape, func, string } from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { fakeAction } from '../../actions';
-import { houseDataRequest } from '../../apiCalls'
+import { addHousesToStore } from '../../actions';
+// import { fakeAction } from '../../actions';
+import { houseDataRequest } from '../../apiCalls';
+
 
 class App extends Component {
 
   async componentDidMount(){
     const url = 'http://localhost:3001/api/v1/houses';
-    const data = await houseDataRequest(url);
+    const housesInfo = await houseDataRequest(url);
+    this.props.addHousesToStore(housesInfo);
   }
 
   render() {
@@ -32,12 +35,12 @@ class App extends Component {
 }
 
 App.propTypes = {
-  fake: shape({ fake: string }),
-  fakeAction: func.isRequired
+  fake: PropTypes.shape({ fake: string }),
+  addHousesToStore: PropTypes.func
 };
 
 const mapStateToProps = ({ fake }) => ({ fake });
-const mapDispatchToProps = dispatch => ({ fakeAction:
-  () => dispatch(fakeAction())
+const mapDispatchToProps = dispatch => ({ 
+  addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
