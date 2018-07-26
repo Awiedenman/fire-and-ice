@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import { mapStateToProps } from '../../Containers/CardContainer/CardContainer';
 // import fetchSwornMemberData}
 
 
 
 export const Card = ({house, fetchSwornMemberData}) => {
+  // console.log(swornMembers);
   
   const swornMemberId = () =>{
     // console.log('click');
@@ -17,7 +20,6 @@ export const Card = ({house, fetchSwornMemberData}) => {
     return membersIds;
   };
   // console.log(swornMemberId);
-
   return (
     <div 
       className='Card'
@@ -37,3 +39,9 @@ export const Card = ({house, fetchSwornMemberData}) => {
 Card.propTypes = {
   house: PropTypes.object
 };
+
+// export const mapStateToProps = state => ({
+//   swornMembers: state.swornMembers
+// });
+
+// export default connect(mapStateToProps)(Card);

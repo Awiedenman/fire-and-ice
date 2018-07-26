@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from '../../components/Card/Card';
 
-export const CardContainer = ({housesInfo, fetchSwornMemberData}) => {
-  // console.log('housesInfo', housesInfo);
+export const CardContainer = ({housesInfo, fetchSwornMemberData, swornMembers}) => {
+  // console.log('swornMembers', swornMembers);
 
   const houseCards = housesInfo.map(( house, index )=> {
     // console.log(house);
@@ -23,7 +23,8 @@ export const CardContainer = ({housesInfo, fetchSwornMemberData}) => {
 };
 
 export const mapStateToProps = state => ({
-  housesInfo: state.housesInfo
+  housesInfo: state.housesInfo,
+  swornMembers: state.swornMembers
 });
 
 export default connect(mapStateToProps)(CardContainer);
