@@ -8,11 +8,11 @@ import { addHousesToStore } from '../../actions';
 import { houseDataRequest } from '../../apiCalls';
 
 
-class App extends Component {
+export class App extends Component {
 
   async componentDidMount(){
     const url = 'http://localhost:3001/api/v1/houses';
-    const housesInfo = await houseDataRequest(url);
+    const housesInfo = await houseDataRequest(url);    
     this.props.addHousesToStore(housesInfo);
   }
 
@@ -40,7 +40,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = ({ fake }) => ({ fake });
-const mapDispatchToProps = dispatch => ({ 
+export const mapDispatchToProps = dispatch => ({ 
   addHousesToStore:(housesInfo) => dispatch(addHousesToStore(housesInfo))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
