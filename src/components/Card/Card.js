@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { requestSwornMemberInfo } from '../../apiCalls';
+// import fetchSwornMemberData}
 
 
 
-export const Card = ({house}) => {
-  console.log(house);
+export const Card = ({house, fetchSwornMemberData}) => {
   
-  const swornMemberId = (swornMembers) =>{
-    const seperateId = swornMembers.forEach( member => {
-      member.split('/').slice(5);
-      // const memberId = splitMemeber.slice(5);
-      // console.log(splitMember)
+  const swornMemberId = () =>{
+    // console.log('click');
+    const membersIds = house.swornMembers.map( member => {
+      const seperateId = member.split('/').slice(5);
+      fetchSwornMemberData(seperateId[0]);
+      return seperateId[0];
     });
-    console.log(seperateId);
-    return seperateId;
+    // console.log(membersIds);
+    return membersIds;
   };
-    // requestSwornMemberInfo(memberId);
+  // console.log(swornMemberId);
 
   return (
     <div 
       className='Card'
-      onClick={swornMemberId(house.swornMembers)}
+      onClick={swornMemberId}
     >
       <p>name:{house.name}</p>
       <p>founded:{house.founded}</p>

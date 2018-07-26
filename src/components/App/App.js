@@ -5,7 +5,7 @@ import './App.css';
 import { connect } from 'react-redux';
 import { addHousesToStore } from '../../actions';
 // import { fakeAction } from '../../actions';
-import { houseDataRequest } from '../../apiCalls';
+import { houseDataRequest,requestSwornMemberInfo } from '../../apiCalls';
 import CardContainer from '../../Containers/CardContainer/CardContainer';
 
 
@@ -15,6 +15,19 @@ export class App extends Component {
     this.state = {
       isLoading: false
     };
+  }
+
+  fetchSwornMemberData =  (membersIds) => {
+    console.log('click');
+    
+    console.log(membersIds);
+    // try {
+    //   const swornMemberInfo = await requestSwornMemberInfo(memberId);
+    //   this.props.addSwornMembersToStore(swornMemberInfo)
+    // } catch (error){
+    //   throw Error(`Could not fetch ${error.message}`)
+    // }
+
   }
 
   async componentDidMount(){
@@ -45,7 +58,8 @@ export class App extends Component {
         <div className='Display-info'>
           {this.state.isLoading ?
             <img id='wolf' src={ require('../../images/wolf.gif')}/> :
-            <CardContainer/>
+            <CardContainer
+              fetchSwornMemberData={this.fetchSwornMemberData}/>
           }
         </div>
       </div>

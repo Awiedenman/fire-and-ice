@@ -14,8 +14,8 @@ export const houseDataRequestAlternate = (url) => {
     });
 };
 
-export const requestSwornMemberInfo = async (id) => {
-  const response = await fetch(`http://localhost:3001/api/v1/character/${id}`);
+export const requestSwornMemberInfo = async (swornMemberId) => {
+  const response = await fetch(`http://localhost:3001/api/v1/character/${swornMemberId}`);
   const swornMember = await response.json();
   return swornMember;
 };
