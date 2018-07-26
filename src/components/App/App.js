@@ -24,9 +24,9 @@ export class App extends Component {
     try {
       const swornMemberInfo = await requestSwornMemberInfo(memberId);
       console.log(swornMemberInfo)
-      this.props.addSwornMembersToStore(swornMemberInfo)
+      this.props.addSwornMembersToStore(swornMemberInfo);
     } catch (error){
-      throw Error(`Could not fetch ${error.message}`)
+      throw Error(`Could not fetch ${error.message}`);
     }
 
   }
